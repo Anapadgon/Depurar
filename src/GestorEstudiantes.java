@@ -23,7 +23,7 @@ public class GestorEstudiantes {
 
         for (Estudiante estudiante : estudiantes) {
             double media = calcularNotaMedia(estudiante); // Posible fallo aquí
-            if (media > mejorNota) {
+            if (!Double.isNaN(media) && media > mejorNota) {
                 mejorNota = media;
                 mejor = estudiante;
             }
