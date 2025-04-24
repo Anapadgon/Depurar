@@ -35,12 +35,16 @@ public class GestorEstudiantes {
     public static void guardarResultados(Estudiante[] estudiantes, String rutaFichero) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaFichero))) {
             for (Estudiante estudiante : estudiantes) {
-                writer.write("Nombre: " + estudiante.getNombre() + ", Nota Media: " +
-                        calcularNotaMedia(estudiante)); // Posible fallo si calcularNotaMedia lanza una excepción
-                writer.newLine();
+                double media = calcularNotaMedia(estudiante);
+                if (Double.isNaN(media)) {
+                    writer.write("Nombre: " + estudiante.getNombre() + ", Nota Media: Sin notas");
+                } else {
+                    writer.write("Nombre: " + estudiante.getNombre() + ", Nota Media: " + String.format("%.2f", media));
+                }
             }
         } catch (IOException e) {
             System.out.println("Error al guardar el fichero: " + e.getMessage());
         }
     }
+
 }
